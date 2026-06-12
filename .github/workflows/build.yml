@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-size: 20
+          node-version: 20
 
       - name: Install Dependencies
         run: |
@@ -27,10 +27,9 @@ jobs:
 
       - name: Build Windows EXE
         run: |
-          copy electron-package.json package.json
-          copy electron-main.js main.js
-          npx --package=electron-builder electron-builder --windows -c.publish=null
-
+          npx electron-builder --windows -c electron-package.json -c.publish=null
+        env:
+          ELECTRON_BUILDER_ALLOW_EMPTY_ARCHIVE: true
 
       - name: Upload Windows App
         uses: actions/upload-artifact@v4
