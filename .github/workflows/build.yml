@@ -20,24 +20,21 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm install --save-dev electron electron-builder
+          npm install -g electron-packager
 
       - name: Build Web Assets
         run: npm run build
 
       - name: Build Windows EXE
         run: |
-          # Жёстко копируем конфиг Электрона в главный package.json
-          copy electron-package.json package.json
-          # Запускаем сборку без публикации
-          npx electron-builder --windows --config.publish=null
-
+          electron-packager . MyCustomBrowser --platform=win32 --arch=x64 --out=dist --overwrite
 
       - name: Upload Windows App
         uses: actions/upload-artifact@v4
         with:
           name: Browser-Windows-EXE
-          path: dist/*.exe
+          path: dist/MyCustomBrowser-win32-x64/
+
 
   build-android:
     runs-on: ubuntu-latest
