@@ -27,9 +27,11 @@ jobs:
 
       - name: Build Windows EXE
         run: |
-          npx electron-builder --windows -c electron-package.json -c.publish=null
-        env:
-          ELECTRON_BUILDER_ALLOW_EMPTY_ARCHIVE: true
+          # Жёстко копируем конфиг Электрона в главный package.json
+          copy electron-package.json package.json
+          # Запускаем сборку без публикации
+          npx electron-builder --windows --config.publish=null
+
 
       - name: Upload Windows App
         uses: actions/upload-artifact@v4
