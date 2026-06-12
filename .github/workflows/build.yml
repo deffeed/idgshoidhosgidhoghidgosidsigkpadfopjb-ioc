@@ -30,7 +30,7 @@ jobs:
           # Переименовываем файлы для Electron, чтобы сборщик их подцепил
           copy electron-package.json package.json
           copy electron-main.js main.js
-          npx electron-builder --windows
+          npx electron-builder --windows --config.publish=never
 
       - name: Upload Windows App
         uses: actions/upload-artifact@v4
